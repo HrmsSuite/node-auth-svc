@@ -21,7 +21,7 @@ export class Auth_Services {
     const accessToken = signAccessToken(payload);
     const refreshToken = signRefreshToken(payload);
 
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken, companyId:company._id.toString()};
   }
   public async refresh(token: string) {
   try {

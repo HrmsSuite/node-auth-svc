@@ -19,6 +19,7 @@ export class AdminController {
         message: "Login successful",
         accessToken: authLogin.accessToken,    
         refreshToken: authLogin.refreshToken,  
+        companyId:authLogin.companyId,
       });
     } catch (error) {
       next(error);
