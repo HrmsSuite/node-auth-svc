@@ -1,0 +1,44 @@
+{
+  "name": "auth-svc",
+  "version": "1.0.0",
+  "description": "Authentication Repository",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"No tests yet\"",
+    "seed": "tsx src/seeding/company.seeding.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HrmsSuite/node-auth-svc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HrmsSuite/node-auth-svc/issues"
+  },
+  "homepage": "https://github.com/HrmsSuite/node-auth-svc#readme",
+  "dependencies": {
+    "@hrmssuite/persistence": "^1.0.17",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.5.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/mongoose": "^5.11.96",
+    "@types/node": "^25.6.0",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}
