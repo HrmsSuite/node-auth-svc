@@ -10,7 +10,7 @@ export class Company_Dao {
       throw new Apperror("Something went wrong", 401);
     }
   }
-  
+
   public async deleteCompany(id: string): Promise<Company> {
     try {
       const deleted = await CompanyModel.findByIdAndDelete(id);
@@ -21,6 +21,20 @@ export class Company_Dao {
     } catch (err) {
       if (err instanceof Apperror) throw err;
       throw new Apperror("Something went wrong", 500);
+    }
+  }
+  public async getCompanyById(id: string): Promise<Company> {
+    try {
+      const company = await CompanyModel.findById(id)
+        .select("-password")
+        .lean();
+      if (!company) {
+        throw new Apperror("Company not found", 404);
+      }
+      return company;
+    } catch (err) {
+      if (err instanceof Apperror) throw err;
+      throw new Apperror("Failed to fetch company", 500);
     }
   }
 }

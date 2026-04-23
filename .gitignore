@@ -24,3 +24,6 @@ Thumbs.db
 
 # NPM auth token
 .npmrc
+
+# Company seeding component
+src/seeding/company.seeding.ts
