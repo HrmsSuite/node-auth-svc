@@ -14,5 +14,6 @@ export class Routing {
     this.routing.post("/refresh-token", Asyncwrapper(adminController.refreshController));
     this.routing.post("/login", Asyncwrapper(adminController.adminController));
     this.routing.get("/company",authenticate, Asyncwrapper(adminController.getCompanyDataById))
+    this.routing.patch("/company",authenticate,Asyncwrapper(adminController.EditCompanyDataById));
   }
 }

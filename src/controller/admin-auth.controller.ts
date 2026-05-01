@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { Apperror } from "../common/utils/error.js";
 import { Auth_Services } from "../auth-service/index.js";
+import { CompanyServices } from "../auth-service/company.service.js";
 
 const authService = new Auth_Services();
-
+const company = new CompanyServices();
 export class AdminController {
   public async adminController(
     req: Request,
@@ -65,6 +66,31 @@ export class AdminController {
       return res
         .status(200)
         .json({ data: data, message: "Data get Successfully" });
+    } catch (error) {
+      next(error);
+    }
+  }
+  public async EditCompanyDataById(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const companyId = req.companyId;
+
+      if (!companyId) {
+        throw new Apperror("Unauthorized", 401);
+      }
+
+      const updatedCompany = await company.EditCompanyServices(
+        companyId,
+        req.body,
+      );
+
+      return res.status(200).json({
+        data: updatedCompany,
+        message: "Company updated successfully",
+      });
     } catch (error) {
       next(error);
     }
