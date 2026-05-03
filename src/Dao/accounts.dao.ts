@@ -5,9 +5,10 @@ import { Types } from "mongoose";
 export class AccountsDao {
   public createAccount = async (
     data: AccountDetails,
+    companyId: string,
   ): Promise<AccountDetails> => {
     try {
-      const created = await AccountsModel.create(data);
+      const created = await AccountsModel.create({...data,companyId,});
       return created;
     } catch (error: any) {
       throw new Apperror("Something went wrong", 500); // 
@@ -16,10 +17,12 @@ export class AccountsDao {
 
   public deactivateAccount = async (
     employeeId: Types.ObjectId,
+    companyId: string,
   ): Promise<AccountDetails> => {
     try {
       const deactivated = await AccountsModel.findOneAndUpdate(
-        { employee: employeeId },
+        
+        { employee: employeeId,companyId, },
         { isActive: false },
         { new: true },
       );
@@ -33,10 +36,12 @@ export class AccountsDao {
   };
   public activateAccount = async (
     employeeId: Types.ObjectId,
+    companyId: string,
   ): Promise<AccountDetails> => {
     try {
       const activated = await AccountsModel.findOneAndUpdate(
-        { employee: employeeId },
+        { employee: employeeId ,
+        companyId,},
         { isActive: true },
         { new: true },
       );
@@ -51,10 +56,11 @@ export class AccountsDao {
 
   public deleteAccount = async (
     employeeId: string,
+    companyId: string,
   ): Promise<AccountDetails> => {
     try {
       const deleted = await AccountsModel.findOneAndDelete({
-        employee: employeeId,
+        employee: employeeId,companyId,
       });
       if (!deleted) {
         throw new Apperror("Account not found", 404); // 
@@ -65,9 +71,11 @@ export class AccountsDao {
     }
   };
 
-  public getAllAccount = async (): Promise<AccountDetails[]> => {
+  public getAllAccount = async (
+    companyId: string,
+  ): Promise<AccountDetails[]> => {
     try {
-      const getAll = await AccountsModel.find()
+      const getAll = await AccountsModel.find({companyId})
         .lean()
         .populate("employee", "data.basic.firstName data.basic.lastName data.basic.email data.basic.phone job");
       return getAll;

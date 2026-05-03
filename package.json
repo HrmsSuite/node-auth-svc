@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/HrmsSuite/node-auth-svc#readme",
   "dependencies": {
-    "@hrmssuite/persistence": "^1.0.29",
+    "@hrmssuite/persistence": "^1.0.31",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
