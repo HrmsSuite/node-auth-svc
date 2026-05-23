@@ -9,10 +9,19 @@ import {
 import { Company_Dao } from "../Dao/company.dao.js";
 import { AccountsDao } from "../Dao/accounts.dao.js"; 
 
+interface LoginResult {
+  accessToken: string;
+  refreshToken: string;
+  role: "admin" | "employee";
+  companyId: string;
+  isPasswordChanged?: boolean;
+  employeeId?: string;
+}
+
 export class Auth_Services {
   private companyDao = new Company_Dao();
   private AccountDao = new AccountsDao();
-  public async login(email: string, password: string) {
+  public async login(email: string, password: string): Promise<LoginResult> {
     // Company Login
     const company = await CompanyModel.findOne({ email });
 
@@ -57,8 +66,9 @@ export class Auth_Services {
 
     const payload = {
       id: account._id.toString(),
-      companyId: account.employee.toString(),
+      companyId: account.companyId.toString(),
       role: "employee",
+      employeeId: account.employee.toString(), 
     };
 
     const accessToken = signAccessToken(payload);
@@ -69,7 +79,8 @@ export class Auth_Services {
       refreshToken,
       role: "employee",
       isPasswordChanged: account.isPasswordChanged,
-      companyId: account.employee.toString(),
+      companyId: account.companyId.toString(),
+      employeeId: account.employee.toString(),
     };
   }
 
@@ -96,7 +107,8 @@ export class Auth_Services {
 
       const newPayload = {
         id: account._id.toString(),
-        companyId: account.employee.toString(),
+        companyId: account.companyId.toString(),
+        employeeId: account.employee.toString(),
         role: "employee",
       };
       return { accessToken: signAccessToken(newPayload) };

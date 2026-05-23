@@ -40,8 +40,7 @@ export class AccountsDao {
   ): Promise<AccountDetails> => {
     try {
       const activated = await AccountsModel.findOneAndUpdate(
-        { employee: employeeId ,
-        companyId,},
+        { employee: employeeId ,companyId},
         { isActive: true },
         { new: true },
       );
@@ -60,8 +59,7 @@ export class AccountsDao {
   ): Promise<AccountDetails> => {
     try {
       const deleted = await AccountsModel.findOneAndDelete({
-        employee: employeeId,companyId,
-      });
+        employee: employeeId,companyId});
       if (!deleted) {
         throw new Apperror("Account not found", 404); // 
       }
