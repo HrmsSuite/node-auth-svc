@@ -21,9 +21,7 @@ Thumbs.db
 
 # TypeScript cache
 *.tsbuildinfo
-
-# NPM auth token
-.npmrc
+ 
 
 # Company seeding component
 src/seeding/company.seeding.ts
