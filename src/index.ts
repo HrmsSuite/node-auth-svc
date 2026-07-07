@@ -9,7 +9,8 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://hrms-suite.netlify.app",
+  "https://hrms-suite.netlify.app", 
+  "https://dev-hrms-suite.vercel.app/", 
 ];
 app.use(
   cors({
