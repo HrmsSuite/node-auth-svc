@@ -8,7 +8,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(
  app.use(
   cors({
     origin: [
@@ -18,7 +17,7 @@ app.use(
     ],
     credentials: true,
   })
-));
+)
 
 app.use(express.json());
 app.use(router);
