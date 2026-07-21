@@ -17,5 +17,5 @@ router.use(`${path}/login`, authRouting.routing);
 router.use(path, authRouting.routing);
 router.use(`${path}/account`, accountRouting.routing);
 router.use(`${path}/roles`, roleRouting.routing);
-router.use(`${path}/permission`, permissionRouting.routing);
+router.use(`${path}/permissions`, permissionRouting.routing);
 export default router;
