@@ -8,10 +8,10 @@ export class AccountsDao {
     companyId: string,
   ): Promise<AccountDetails> => {
     try {
-      const created = await AccountsModel.create({...data,companyId,});
+      const created = await AccountsModel.create({ ...data, companyId });
       return created;
     } catch (error: any) {
-      throw new Apperror("Something went wrong", 500); // 
+      throw new Apperror("Something went wrong", 500); //
     }
   };
 
@@ -21,17 +21,16 @@ export class AccountsDao {
   ): Promise<AccountDetails> => {
     try {
       const deactivated = await AccountsModel.findOneAndUpdate(
-        
-        { employee: employeeId,companyId, },
+        { employee: employeeId, companyId },
         { isActive: false },
         { new: true },
       );
       if (!deactivated) {
-        throw new Apperror("Account not found", 404); // 
+        throw new Apperror("Account not found", 404); //
       }
       return deactivated;
     } catch (error: any) {
-      throw new Apperror("Something went wrong", 500); // 
+      throw new Apperror("Something went wrong", 500); //
     }
   };
   public activateAccount = async (
@@ -40,16 +39,16 @@ export class AccountsDao {
   ): Promise<AccountDetails> => {
     try {
       const activated = await AccountsModel.findOneAndUpdate(
-        { employee: employeeId ,companyId},
+        { employee: employeeId, companyId },
         { isActive: true },
         { new: true },
       );
       if (!activated) {
-        throw new Apperror("Account not found", 404); // 
+        throw new Apperror("Account not found", 404); //
       }
       return activated;
     } catch (error: any) {
-      throw new Apperror("Something went wrong", 500); // 
+      throw new Apperror("Something went wrong", 500); //
     }
   };
 
@@ -59,13 +58,15 @@ export class AccountsDao {
   ): Promise<AccountDetails> => {
     try {
       const deleted = await AccountsModel.findOneAndDelete({
-        employee: employeeId,companyId});
+        employee: employeeId,
+        companyId,
+      });
       if (!deleted) {
-        throw new Apperror("Account not found", 404); // 
+        throw new Apperror("Account not found", 404); //
       }
       return deleted;
     } catch (error: any) {
-      throw new Apperror("Something went wrong", 500); // 
+      throw new Apperror("Something went wrong", 500); //
     }
   };
 
@@ -73,12 +74,15 @@ export class AccountsDao {
     companyId: string,
   ): Promise<AccountDetails[]> => {
     try {
-      const getAll = await AccountsModel.find({companyId})
+      const getAll = await AccountsModel.find({ companyId })
         .lean()
-        .populate("employee", "data.basic.firstName data.basic.lastName data.basic.email data.basic.phone job");
+        .populate(
+          "employee",
+          "data.basic.firstName data.basic.lastName data.basic.email data.basic.phone job",
+        );
       return getAll;
     } catch (error: any) {
-      throw new Apperror("Something went wrong", 500); // 
+      throw new Apperror("Something went wrong", 500); //
     }
   };
 }

@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
- app.use(
+app.use(
   cors({
     origin: [
       "http://localhost:5173",
@@ -16,8 +16,8 @@ const PORT = process.env.PORT || 4000;
       "https://dev-hrms-suite.vercel.app",
     ],
     credentials: true,
-  })
-)
+  }),
+);
 
 app.use(express.json());
 app.use(router);

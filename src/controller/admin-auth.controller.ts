@@ -25,9 +25,14 @@ export class AdminController {
         accessToken: authLogin.accessToken,
         refreshToken: authLogin.refreshToken,
         companyId: authLogin.companyId,
-        role: authLogin.role,                                
-      isPasswordChanged: authLogin.isPasswordChanged,   
-      employeeId: authLogin.employeeId ?? null,   
+        role: authLogin.role,
+        ...(authLogin.isPasswordChanged !== undefined && {
+          isPasswordChanged: authLogin.isPasswordChanged,
+        }),
+
+        ...(authLogin.employeeId && {
+          employeeId: authLogin.employeeId,
+        }),
       });
     } catch (error) {
       next(error);

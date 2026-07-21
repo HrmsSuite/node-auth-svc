@@ -6,7 +6,7 @@ export function signAccessToken(payload: Payload) {
   const secret = process.env.ACCESSTOKEN;
 
   if (!secret) {
-    throw new Apperror("Access token secret missing",400);
+    throw new Apperror("Access token secret missing", 400);
   }
 
   return jwt.sign(payload, secret, {
@@ -18,7 +18,7 @@ export function signRefreshToken(payload: Payload) {
   const secret = process.env.REFRESHTOKEN;
 
   if (!secret) {
-    throw new Apperror("Refresh token secret missing",400);
+    throw new Apperror("Refresh token secret missing", 400);
   }
 
   return jwt.sign(payload, secret, {
@@ -30,7 +30,7 @@ export function verifyAccessToken(token: string) {
   const secret = process.env.ACCESSTOKEN;
 
   if (!secret) {
-    throw new Apperror("Access token secret missing",400);
+    throw new Apperror("Access token secret missing", 400);
   }
 
   return jwt.verify(token, secret) as Payload;
@@ -40,7 +40,7 @@ export function verifyRefreshToken(token: string) {
   const secret = process.env.REFRESHTOKEN;
 
   if (!secret) {
-    throw new Apperror("Refresh token secret missing",400);
+    throw new Apperror("Refresh token secret missing", 400);
   }
 
   return jwt.verify(token, secret) as Payload;

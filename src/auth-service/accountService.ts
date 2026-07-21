@@ -21,19 +21,21 @@ export class AccountsService {
 
       const hashedPassword = await bcrypt.hash(tempPassword, 10);
 
-      await this.accountsDao.createAccount({ 
-        employee: new Types.ObjectId(employeeId),
-        email,
-        password: hashedPassword,
-        tempPassword, 
-        isActive: true,
-        role: "employee",
-        isPasswordChanged: false,
-        passwordChangedAt: null,
-        meta: {
-          createdBy: new Types.ObjectId(createdBy),
-        },
-      } as any,companyId);
+      await this.accountsDao.createAccount(
+        {
+          employee: new Types.ObjectId(employeeId),
+          email,
+          password: hashedPassword,
+          tempPassword,
+          isActive: true,
+          isPasswordChanged: false,
+          passwordChangedAt: null,
+          meta: {
+            createdBy: new Types.ObjectId(createdBy),
+          },
+        } as any,
+        companyId,
+      );
 
       return { tempPassword };
     } catch (error) {
@@ -41,35 +43,52 @@ export class AccountsService {
     }
   };
 
-  public deactivateAccount = async (employeeId: string,companyId:string): Promise<void> => {
+  public deactivateAccount = async (
+    employeeId: string,
+    companyId: string,
+  ): Promise<void> => {
     try {
-      await this.accountsDao.deactivateAccount(new Types.ObjectId(employeeId),companyId);
+      await this.accountsDao.deactivateAccount(
+        new Types.ObjectId(employeeId),
+        companyId,
+      );
     } catch (error) {
       throw error;
     }
   };
-  public activateAccount = async (employeeId: string,companyId:string): Promise<void> => {
+  public activateAccount = async (
+    employeeId: string,
+    companyId: string,
+  ): Promise<void> => {
     try {
-      await this.accountsDao.activateAccount(new Types.ObjectId(employeeId),companyId);
+      await this.accountsDao.activateAccount(
+        new Types.ObjectId(employeeId),
+        companyId,
+      );
     } catch (error) {
       throw error;
     }
   };
 
-  public deleteAccount = async (employeeId: string,companyId:string): Promise<void> => {
+  public deleteAccount = async (
+    employeeId: string,
+    companyId: string,
+  ): Promise<void> => {
     try {
-      await this.accountsDao.deleteAccount(employeeId,companyId);
+      await this.accountsDao.deleteAccount(employeeId, companyId);
     } catch (error) {
       throw error;
     }
   };
 
-  public findAllAccount = async(companyId:string):Promise<AccountDetails[]> => {
+  public findAllAccount = async (
+    companyId: string,
+  ): Promise<AccountDetails[]> => {
     try {
-        const res = await this.accountsDao.getAllAccount(companyId);
-        return res
+      const res = await this.accountsDao.getAllAccount(companyId);
+      return res;
     } catch (error) {
-        throw error
+      throw error;
     }
-  }
+  };
 }

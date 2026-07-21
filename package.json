@@ -9,7 +9,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "echo \"No tests yet\"",
-    "seed": "tsx src/seeding/company.seeding.ts"
+    "seed": "tsx src/seeding/company.seeding.ts",
+    "permission-seed": "tsx src/seeding/permission.seeding.ts"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,7 @@
   },
   "homepage": "https://github.com/HrmsSuite/node-auth-svc#readme",
   "dependencies": {
-    "@hrmssuite/persistence": "^1.0.45",
+    "@hrmssuite/persistence": "^1.0.55",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
