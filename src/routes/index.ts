@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { Routing } from "./admin.routes.js";
-import { AccountRouting } from "./accounts.routes.js"; 
+import { AccountRouting } from "./accounts.routes.js";
 import { RoleRouting } from "./role.routes.js";
 import { PermissionRouting } from "./permission.routes.js";
 
@@ -17,5 +17,5 @@ router.use(`${path}/login`, authRouting.routing);
 router.use(path, authRouting.routing);
 router.use(`${path}/account`, accountRouting.routing);
 router.use(`${path}/roles`, roleRouting.routing);
-router.use(`${path}/permissions`, permissionRouting.routing);
+router.use(`${path}/permission`, permissionRouting.routing);
 export default router;
