@@ -34,6 +34,12 @@ export class Auth_Services {
     if (!employee) {
       throw new Apperror("Employee profile not found", 404);
     }
+    if (employee.meta.isDeleted) {
+      throw new Apperror("Employee inactive", 403);
+    }
+    if (employee.data.job.employeeStatus !== "Active") {
+      throw new Apperror("Employee inactive", 403);
+    }
 
     const roleIds = employee.data.job.roleIds?.map((id) => id.toString()) ?? [];
 
@@ -157,6 +163,10 @@ export class Auth_Services {
 
         if (!account) {
           throw new Apperror("Account not found", 404);
+        }
+
+        if (!account.isActive) {
+          throw new Apperror("Account deactivated", 403);
         }
 
         const { roleIds } = await this.getEmployeeRBAC(

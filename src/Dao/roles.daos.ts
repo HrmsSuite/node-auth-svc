@@ -8,6 +8,7 @@ import {
 
 import { Apperror } from "../common/utils/error.js";
 import { IRoleListFilters } from "../typings/IRoleListFilters.typings.js";
+import { RoleWithPermissions } from "../typings/permission.typings.js";
 
 const toObjectId = (id: string) => {
   if (!Types.ObjectId.isValid(id)) {
@@ -305,6 +306,20 @@ export class Role_Dao {
 
       throw new Apperror("Failed to update role", 500);
     }
+  }
+
+  public async getRolesWithPermissions(
+    companyId: string,
+    roleIds: string[],
+  ): Promise<RoleWithPermissions[]> {
+    return RolesModel.find({
+      companyId: toObjectId(companyId),
+      _id: { $in: roleIds.map((id) => toObjectId(id)) },
+      isActive: true,
+      isDeleted: false,
+    })
+      .populate("permissionIds")
+      .lean() as unknown as RoleWithPermissions[];
   }
 
   /**

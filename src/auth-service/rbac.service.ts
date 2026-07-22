@@ -1,21 +1,33 @@
-import { Permission, RolesModel } from "@hrmssuite/persistence";
+import { Permission } from "@hrmssuite/persistence";
 import { Role_Dao } from "../Dao/roles.daos.js";
+import { PopulatedPermission } from "../typings/permission.typings.js";
 
 export class RBAC_Service {
   constructor(private readonly roleDao = new Role_Dao()) {}
 
   /**
-   * Get all permissions for an employee
+   * Get all permissions assigned to employee
    */
   public async getEmployeePermissions(
     companyId: string,
     roleIds: string[],
   ): Promise<Permission[]> {
-    const roles = await this.roleDao.getRolesByIds(companyId, roleIds);
+    if (!roleIds.length) {
+      return [];
+    }
 
-    const permissions = roles.flatMap((role) => role.permissions);
+    const roles = await this.roleDao.getRolesWithPermissions(
+      companyId,
+      roleIds,
+    );
 
-    return [...new Set(permissions)];
+    const permissions = roles.flatMap((role) =>
+      role.permissionIds
+        .filter((permission) => permission?.key)
+        .map((permission) => permission.key),
+    );
+
+    return [...new Set(permissions)] as Permission[];
   }
 
   /**
@@ -53,24 +65,11 @@ export class RBAC_Service {
     companyId: string,
     roleIds: string[],
     requiredPermissions: Permission[],
-  ) {
-    if (!roleIds.length) {
-      return false;
-    }
-
-    const roles = await RolesModel.find({
-      companyId,
-      _id: {
-        $in: roleIds,
-      },
-      isActive: true,
-      isDeleted: false,
-    });
-
-    const userPermissions = roles.flatMap((role) => role.permissions);
+  ): Promise<boolean> {
+    const permissions = await this.getEmployeePermissions(companyId, roleIds);
 
     return requiredPermissions.some((permission) =>
-      userPermissions.includes(permission),
+      permissions.includes(permission),
     );
   }
 }
