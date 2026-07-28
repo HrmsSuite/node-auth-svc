@@ -17,12 +17,30 @@ const permissions = [
     module: "EMPLOYEE",
     action: "VIEW",
     name: "View Employee",
+    description: "Can view all employees in the company",
+  },
+  {
+    key: "employee.view.hierarchy",
+    module: "EMPLOYEE",
+    action: "VIEW",
+    name: "View Team Hierarchy",
+    description:
+      "Can view employees in their reporting chain (direct and indirect reports)",
   },
   {
     key: "employee.update",
     module: "EMPLOYEE",
     action: "UPDATE",
     name: "Update Employee",
+    description: "Can update any employee in the company",
+  },
+  {
+    key: "employee.update.hierarchy",
+    module: "EMPLOYEE",
+    action: "UPDATE",
+    name: "Update Team Hierarchy",
+    description:
+      "Can update employees in their reporting chain (direct and indirect reports)",
   },
   {
     key: "employee.delete",
@@ -129,18 +147,44 @@ const permissions = [
     module: "LEAVE",
     action: "VIEW",
     name: "View Leave",
+    description: "Can view leave records for all employees in the company",
+  },
+  {
+    key: "leave.view.hierarchy",
+    module: "LEAVE",
+    action: "VIEW",
+    name: "View Team Leave",
+    description:
+      "Can view leave records for employees in their reporting chain",
   },
   {
     key: "leave.approve",
     module: "LEAVE",
     action: "APPROVE",
     name: "Approve Leave",
+    description: "Can approve/reject leave for all employees in the company",
+  },
+  {
+    key: "leave.approve.hierarchy",
+    module: "LEAVE",
+    action: "APPROVE",
+    name: "Approve Team Leave",
+    description:
+      "Can approve/reject leave for employees in their reporting chain",
   },
   {
     key: "leave.reject",
     module: "LEAVE",
     action: "REJECT",
     name: "Reject Leave",
+  },
+
+  {
+    key: "leave.employee.view",
+    module: "LEAVE",
+    action: "VIEW",
+    name: "View Own Leave Records",
+    description: "Employee can view only their own leave history",
   },
 
   // ==========================
@@ -151,6 +195,14 @@ const permissions = [
     module: "ATTENDANCE",
     action: "VIEW",
     name: "View Attendance",
+    description: "Can view attendance for all employees in the company",
+  },
+  {
+    key: "attendance.view.hierarchy",
+    module: "ATTENDANCE",
+    action: "VIEW",
+    name: "View Team Attendance",
+    description: "Can view attendance for employees in their reporting chain",
   },
   {
     key: "attendance.update",
@@ -163,6 +215,20 @@ const permissions = [
     module: "ATTENDANCE",
     action: "APPROVE",
     name: "Approve Attendance Regularization",
+  },
+  {
+    key: "attendance.employee.view",
+    module: "ATTENDANCE",
+    action: "VIEW",
+    name: "View Own Attendance",
+    description: "Employee can view only their own attendance records",
+  },
+  {
+    key: "attendance.regularization.employee",
+    module: "ATTENDANCE",
+    action: "CREATE",
+    name: "Request Attendance Regularization",
+    description: "Employee can request regularization for their own attendance",
   },
 
   // ==========================

@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { Asyncwrapper } from "../common/middleware/asyncwrapper.js";
-import { authenticate } from "@hrmssuite/persistence";
+import { authenticate, PERMISSIONS } from "@hrmssuite/persistence";
 import { RoleController } from "../controller/role.controller.js";
+import { authorize } from "../common/middleware/rbac.middleware.js";
 
 const roleController = new RoleController();
 
@@ -17,6 +18,7 @@ export class RoleRouting {
     this.routing.post(
       "/",
       authenticate,
+      authorize(PERMISSIONS.ROLE.CREATE),
       Asyncwrapper((req, res, next) =>
         roleController.createRole(req, res, next),
       ),
@@ -26,6 +28,7 @@ export class RoleRouting {
     this.routing.get(
       "/",
       authenticate,
+      authorize(PERMISSIONS.ROLE.VIEW),
       Asyncwrapper((req, res, next) => roleController.findAll(req, res, next)),
     );
 
@@ -33,15 +36,15 @@ export class RoleRouting {
     this.routing.get(
       "/:id",
       authenticate,
-      Asyncwrapper((req, res, next) =>
-        roleController.findById(req, res, next),
-      ),
+      authorize(PERMISSIONS.ROLE.VIEW),
+      Asyncwrapper((req, res, next) => roleController.findById(req, res, next)),
     );
 
     /* Update Role */
     this.routing.patch(
       "/:id",
       authenticate,
+      authorize(PERMISSIONS.ROLE.UPDATE),
       Asyncwrapper((req, res, next) =>
         roleController.updateRole(req, res, next),
       ),
@@ -51,6 +54,7 @@ export class RoleRouting {
     this.routing.patch(
       "/:id/status",
       authenticate,
+      authorize(PERMISSIONS.ROLE.UPDATE),
       Asyncwrapper((req, res, next) =>
         roleController.updateRoleStatus(req, res, next),
       ),
@@ -60,6 +64,7 @@ export class RoleRouting {
     this.routing.delete(
       "/:id",
       authenticate,
+      authorize(PERMISSIONS.ROLE.DELETE),
       Asyncwrapper((req, res, next) =>
         roleController.deleteRole(req, res, next),
       ),
