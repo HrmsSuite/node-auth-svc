@@ -74,16 +74,15 @@ export class AccountsDao {
     companyId: string,
   ): Promise<AccountDetails[]> => {
     try {
-      const getAll = await AccountsModel.find({ companyId })
-        .populate({
-          path: "employee",
-          select:
-            "data.basic.firstName data.basic.lastName data.basic.email data.basic.phone data.job.roleIds",
-          populate: {
-            path: "data.job.roleIds",
-            select: "name code type",
-          },
-        });
+      const getAll = await AccountsModel.find({ companyId }).populate({
+        path: "employee",
+        select:
+          "data.basic.firstName data.basic.lastName data.basic.email data.basic.phone data.job.roleIds",
+        populate: {
+          path: "data.job.roleIds",
+          select: "name code type",
+        },
+      });
       return getAll;
     } catch (error: any) {
       throw new Apperror("Something went wrong", 500); //

@@ -33,6 +33,10 @@ export class AdminController {
         ...(authLogin.employeeId && {
           employeeId: authLogin.employeeId,
         }),
+
+        ...(authLogin.isManager !== undefined && {
+          isManager: authLogin.isManager, // ← add this
+        }),
       });
     } catch (error) {
       next(error);

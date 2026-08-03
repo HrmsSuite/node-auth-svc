@@ -12,4 +12,6 @@ export type Payload = {
   roleIds?: string[];
 
   permissions?: Permission[];
+
+  isManager?: boolean;
 };

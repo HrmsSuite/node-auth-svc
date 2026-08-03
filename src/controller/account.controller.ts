@@ -15,7 +15,7 @@ export class AccountsController {
     next: NextFunction,
   ): Promise<void> => {
     try {
-      const { employeeId, email, } = req.body;
+      const { employeeId, email } = req.body;
       const companyId = req.companyId as string;
       const createdBy = req.user?.id as string;
 
@@ -23,7 +23,7 @@ export class AccountsController {
         employeeId,
         email,
         createdBy,
-        companyId
+        companyId,
       );
 
       res.status(201).json({
@@ -47,7 +47,7 @@ export class AccountsController {
       if (!employeeId) {
         throw new Apperror("Unauthorized", 401);
       }
-      await this.accountsService.deactivateAccount(employeeId,companyId);
+      await this.accountsService.deactivateAccount(employeeId, companyId);
       res.status(200).json({
         success: true,
         message: "Account deactivated successfully",
@@ -67,7 +67,7 @@ export class AccountsController {
       if (!employeeId) {
         throw new Apperror("Unauthorized", 401);
       }
-      await this.accountsService.activateAccount(employeeId,companyId);
+      await this.accountsService.activateAccount(employeeId, companyId);
       res.status(200).json({
         success: true,
         message: "Account activated successfully",
@@ -88,7 +88,7 @@ export class AccountsController {
       if (!employeeId) {
         throw new Apperror("Unauthorized", 401);
       }
-      await this.accountsService.deleteAccount(employeeId,companyId);
+      await this.accountsService.deleteAccount(employeeId, companyId);
       res.status(200).json({
         success: true,
         message: "Account deleted successfully",

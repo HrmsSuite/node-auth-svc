@@ -15,6 +15,7 @@ import {
 
 import { Company_Dao } from "../Dao/company.dao.js";
 import { Payload } from "../typings/payload.typings.js";
+import { Types } from "mongoose";
 
 interface LoginResult {
   accessToken: string;
@@ -23,6 +24,7 @@ interface LoginResult {
   companyId: string;
   isPasswordChanged?: boolean;
   employeeId?: string;
+  isManager?: boolean;
 }
 
 export class Auth_Services {
@@ -46,6 +48,15 @@ export class Auth_Services {
     return {
       roleIds,
     };
+  }
+
+  private async checkIsManager(employeeId: string): Promise<boolean> {
+    const count = await EmployeeModel.countDocuments({
+      "data.job.reportingManagerId": new Types.ObjectId(employeeId),
+      "meta.isDeleted": false,
+      "data.job.employeeStatus": "Active",
+    });
+    return count > 0;
   }
 
   public async login(email: string, password: string): Promise<LoginResult> {
@@ -100,10 +111,14 @@ export class Auth_Services {
       throw new Apperror("Invalid email or password", 401);
     }
 
+    const employeeId = account.employee.toString();
+
     const { roleIds } = await this.getEmployeeRBAC(
       account.employee.toString(),
       account.companyId.toString(),
     );
+
+    const isManager = await this.checkIsManager(employeeId);
 
     const payload: Payload = {
       id: account._id.toString(),
@@ -115,6 +130,8 @@ export class Auth_Services {
       employeeId: account.employee.toString(),
 
       roleIds,
+
+      isManager,
     };
 
     return {
@@ -129,6 +146,8 @@ export class Auth_Services {
       employeeId: account.employee.toString(),
 
       isPasswordChanged: account.isPasswordChanged,
+
+      isManager,
     };
   }
 
@@ -169,10 +188,14 @@ export class Auth_Services {
           throw new Apperror("Account deactivated", 403);
         }
 
+        const employeeId = account.employee.toString();
+
         const { roleIds } = await this.getEmployeeRBAC(
           account.employee.toString(),
           account.companyId.toString(),
         );
+
+        const isManager = await this.checkIsManager(employeeId);
 
         const newPayload: Payload = {
           id: account._id.toString(),
@@ -184,6 +207,7 @@ export class Auth_Services {
           role: "employee",
 
           roleIds,
+          isManager,
         };
 
         return {
