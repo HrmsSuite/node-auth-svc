@@ -260,6 +260,97 @@ const permissions = [
   },
 
   // ==========================
+  // SALARY
+  // ==========================
+
+  // Salary Component
+  {
+    key: "salary.component.create",
+    module: "SALARY",
+    action: "CREATE",
+    name: "Create Salary Component",
+  },
+  {
+    key: "salary.component.view",
+    module: "SALARY",
+    action: "VIEW",
+    name: "View Salary Components",
+  },
+  {
+    key: "salary.component.update",
+    module: "SALARY",
+    action: "UPDATE",
+    name: "Update Salary Component",
+  },
+  {
+    key: "salary.component.delete",
+    module: "SALARY",
+    action: "DELETE",
+    name: "Delete Salary Component",
+  },
+
+  // Salary Structure
+  {
+    key: "salary.structure.create",
+    module: "SALARY",
+    action: "CREATE",
+    name: "Create Salary Structure",
+  },
+  {
+    key: "salary.structure.view",
+    module: "SALARY",
+    action: "VIEW",
+    name: "View Salary Structures",
+  },
+  {
+    key: "salary.structure.update",
+    module: "SALARY",
+    action: "UPDATE",
+    name: "Update Salary Structure",
+  },
+  {
+    key: "salary.structure.delete",
+    module: "SALARY",
+    action: "DELETE",
+    name: "Delete Salary Structure",
+  },
+
+  // Employee Salary
+  {
+    key: "salary.employee.create",
+    module: "SALARY",
+    action: "CREATE",
+    name: "Create Employee Salary",
+  },
+  {
+    key: "salary.employee.view",
+    module: "SALARY",
+    action: "VIEW",
+    name: "View Employee Salaries",
+  },
+  {
+    key: "salary.employee.update",
+    module: "SALARY",
+    action: "UPDATE",
+    name: "Update Employee Salary",
+  },
+  {
+    key: "salary.employee.delete",
+    module: "SALARY",
+    action: "DELETE",
+    name: "Delete Employee Salary",
+  },
+
+  // Salary Logs
+  {
+    key: "salary.logs.view",
+    module: "SALARY",
+    action: "VIEW",
+    name: "View Salary Audit Logs",
+    description: "Can view salary changes and audit history",
+  },
+
+  // ==========================
   // PAYROLL
   // ==========================
   {
