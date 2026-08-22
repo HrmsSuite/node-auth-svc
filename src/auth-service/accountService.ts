@@ -83,10 +83,36 @@ export class AccountsService {
 
   public findAllAccount = async (
     companyId: string,
-  ): Promise<AccountDetails[]> => {
+    params: {
+      page?: number;
+      limit?: number;
+      search?: string;
+      roleId?: string;
+      employeeId?: string;
+    } = {},
+  ) => {
     try {
-      const res = await this.accountsDao.getAllAccount(companyId);
-      return res;
+      const page = Math.max(Number(params.page) || 1, 1);
+      const limit = Math.max(Number(params.limit) || 10, 1);
+
+      const result = await this.accountsDao.getAllAccount(companyId, {
+        page,
+        limit,
+        search: params.search,
+        roleId: params.roleId,
+        employeeId: params.employeeId,
+      });
+
+      return {
+        data: result.data,
+
+        pagination: {
+          page,
+          limit,
+          total: result.total,
+          totalPages: Math.ceil(result.total / limit),
+        },
+      };
     } catch (error) {
       throw error;
     }

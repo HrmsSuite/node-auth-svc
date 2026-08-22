@@ -104,11 +104,22 @@ export class AccountsController {
   ): Promise<void> => {
     try {
       const companyId = req.companyId as string;
-      const accounts = await this.accountsService.findAllAccount(companyId);
+
+      const { page, limit, search, roleId, employeeId } = req.query;
+
+      const accounts = await this.accountsService.findAllAccount(companyId, {
+        page: Number(page) || 1,
+        limit: Number(limit) || 10,
+        search: search as string | undefined,
+        roleId: roleId as string | undefined,
+        employeeId: employeeId as string | undefined,
+      });
+
       res.status(200).json({
         success: true,
         message: "Accounts fetched successfully",
-        data: accounts,
+        data: accounts.data,
+        pagination: accounts.pagination,
       });
     } catch (error) {
       next(error);
